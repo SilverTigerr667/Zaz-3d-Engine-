@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zaz Engine Editor</title>
+    <style>
+        body { margin: 0; overflow: hidden; display: flex; }
+        #canvas { flex-grow: 1; height: 100vh; background: #111; }
+        #ui { width: 250px; background: #333; color: white; padding: 10px; height: 100vh; }
+        button { width: 100%; padding: 10px; margin-top: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="ui">
+        <h3>3D Editor</h3>
+        <button onclick="addCube()">Add Cube</button>
+        <p>Click objects to select.</p>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        // --- WebGL Setup ---
+        const canvas = document.getElementById('canvas');
+        const gl = canvas.getContext('webgl');
+        if (!gl) alert("WebGL not supported");
+
+        // --- Scene Data ---
+        let objects = [];
+        function addCube() {
+            objects.push({
+                position: [0, 0, 0],
+                rotation: [0, 0, 0],
+                color: [Math.random(), Math.random(), Math.random(), 1.0]
+            });
+            drawScene();
+        }
+
+        // --- Basic Rendering ---
+        function drawScene() {
+            // Resize canvas
+            canvas.width = window.innerWidth - 250;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            gl.clearColor(0.1, 0.1, 0.1, 1.0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+
+            // Simple primitive drawing logic would go here
+            // (Vertex shaders, buffers, etc.)
+            console.log("Drawing " + objects.length + " objects");
+        }
+
+        window.addEventListener('resize', drawScene);
+        drawScene(); // Initial draw
+    </script>
+</body>
+</html>
